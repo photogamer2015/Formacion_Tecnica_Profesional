@@ -108,14 +108,17 @@ class MatriculaForm(forms.ModelForm):
             'fecha_matricula': forms.DateInput(attrs={'class': 'form-input', 'type': 'date'}),
             'talla_camiseta': forms.RadioSelect(attrs={'class': 'talla-radio'}),
             'valor_curso': forms.NumberInput(attrs={'class': 'form-input', 'step': '0.01', 'id': 'id_valor_curso'}),
-            'valor_pagado': forms.NumberInput(attrs={'class': 'form-input', 'step': '0.01'}),
+            'valor_pagado': forms.NumberInput(attrs={'class': 'form-input', 'step': '0.01', 'readonly': True}),
             'observaciones': forms.Textarea(attrs={'class': 'form-input', 'rows': 3}),
         }
 
     def __init__(self, *args, modalidad='presencial', **kwargs):
         super().__init__(*args, **kwargs)
         self.modalidad = modalidad
-
+        
+        self.fields['valor_pagado'].initial = 0.00
+        self.fields['valor_pagado'].help_text = "Los pagos se registran posteriormente en la sección de Abonos."
+        
         # Filtrar cursos: solo los que ofrecen esta modalidad y están activos
         if modalidad == 'online':
             curso_qs = Curso.objects.filter(activo=True, ofrece_online=True)

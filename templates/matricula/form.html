@@ -87,6 +87,11 @@
         <div>
             <label class="form-label" for="{{ mat_form.valor_pagado.id_for_label }}">Valor pagado (USD)</label>
             {{ mat_form.valor_pagado }}{{ mat_form.valor_pagado.errors }}
+            {% if mat_form.valor_pagado.help_text %}
+            <small style="color: #666; display: block; margin-top: 5px;">
+                {{ mat_form.valor_pagado.help_text }}
+            </small>
+            {% endif %}
         </div>
     </div>
 
